@@ -6,6 +6,8 @@
 #
 common:
 	parameters:
+		container:
+			parent: Shake\DI\Container                           # repository autoloading & virtual repository
 
 	php:
 		date.timezone: Europe/Prague
@@ -25,6 +27,9 @@ common:
 
 
 	services:
+		nette.presenterFactory:
+			class: Shake\Application\PresenterFactory(%appDir%)  # virtual presenter feature
+
 		authenticator: Authenticator
 		routerFactory: RouterFactory
 		router: @routerFactory::createRouter

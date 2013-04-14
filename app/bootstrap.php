@@ -4,7 +4,7 @@
 require __DIR__ . '/../libs/autoload.php';
 
 
-$configurator = new Shake\Config\Configurator;  // enable repository autoloading & virtual repository
+$configurator = new Nette\Config\Configurator;
 
 // Enable Nette Debugger for error visualisation & logging
 //$configurator->setDebugMode(TRUE);
