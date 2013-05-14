@@ -11,6 +11,7 @@
 	"config": {
 		"vendor-dir": "libs"
 	},
+	"minimum-stability": "dev",
 	"require": {
 		"php": ">= 5.3.0",
 		"shake/shake": "dev-master"
