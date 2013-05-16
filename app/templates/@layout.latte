@@ -37,7 +37,7 @@
 						Logged in as <a href="#" class="navbar-link">Username</a>
 					</p>
 					<ul class="nav">
-						<li class="active"><a n:href="Homepage:">Home</a></li>
+						<li n:class="$presenter->isLinkCurrent('Homepage:*')? active"><a n:href="Homepage:">Home</a></li>
 						<li><a href="#about">About</a></li>
 						<li><a href="#contact">Contact</a></li>
 					</ul>

@@ -12,7 +12,8 @@
         <div class="control-group" n:if="!$field->getOption('rendered')" n:class="$field->required ? required" n:block="$field->name.'-row'">
             {if $field instanceof \Nette\Forms\Controls\Button}
                 <div class="controls">
-                    {input $field, class => 'btn'}
+                    {var $userClasses = @join(array_keys($field->controlPrototype->class), ' ')}  {* @ - class may not be defined *}
+                    {input $field, class => "btn $userClasses"}
                 </div>
             {elseif $field instanceof \Nette\Forms\Controls\RadioList}
                 {foreach $field->getItems() as $name => $value}
