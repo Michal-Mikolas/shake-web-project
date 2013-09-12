@@ -14,6 +14,7 @@
                 <div class="controls">
                     {var $userClasses = @join(array_keys($field->controlPrototype->class), ' ')}  {* @ - class may not be defined *}
                     {input $field, class => "btn $userClasses"}
+                    <small n:if="isset($field->options['description'])">{$field->options['description']}</small>
                 </div>
             {elseif $field instanceof \Nette\Forms\Controls\RadioList}
                 {foreach $field->getItems() as $name => $value}
@@ -26,14 +27,15 @@
                         {!$field->control}
                         {$field->label->getText()}
                     {/label}
+                    <small n:if="isset($field->options['description'])">{$field->options['description']}</small>
                 </div>
             {else}
                 {label $field, class => 'control-label'/}
                 <div class="controls">
                     {!$field->control}
+                    <small n:if="isset($field->options['description'])">{$field->options['description']}</small>
                 </div>
             {/if}
-            <small n:if="isset($field->options['description'])">{$field->options['description']}</small>
         </div>
         {/foreach}
         </div>
