@@ -28,3 +28,26 @@ a[href^="error:"] {
 	background: red;
 	color: white;
 }
+
+
+
+/*~~~~~~ Vertical center alignment - see http://css-tricks.com/centering-in-the-unknown/ */
+.vertical-center-parent:before {  /* The ghost, nudged to maintain perfect centering */
+	content: '';
+	display: inline-block;
+	height: 100%;
+	vertical-align: middle;
+	margin-right: -0.25em;  /* Adjusts for spacing */
+}
+.vertical-center-parent {
+	letter-spacing: -.31em;  /* Fix for unwanted spaces before centered element */
+	word-spacing: -.43em;
+}
+.vertical-center {  /* The element to be centered, can also be of any width and height */ 
+	display: inline-block;
+	vertical-align: middle;
+	
+	letter-spacing: normal;
+	word-spacing: normal;
+}
+/*~~~~~~/   */
