@@ -1,0 +1,52 @@
+{form $form}
+	<div n:foreach="$form->getComponents(TRUE, 'HiddenField') as $field">{$field->control}</div>
+
+	<div n:foreach="$form->errors as $error" class="alert">{$error}</div>
+
+	<fieldset n:foreach="$form->groups as $group" n:if="$group->controls" n:block="#group">
+		<legend n:ifset="$group->options[label]">{$group->options[label]}</legend>
+		<p n:ifset="$group->options[description]">{$group->options[description]}</p>
+
+		{block #controls}
+			{foreach $group->controls as $field}
+				{if $field instanceof \Nette\Forms\Controls\Button}
+					<div class="form-group">
+						{!$field->control->addClass('btn')}
+						<span n:if="isset($field->options['description'])" class="help-block">{$field->options['description']}</span>
+					</div>
+				{elseif $field instanceof \Nette\Forms\Controls\RadioList}
+					<div class="form-group">
+						{label $field/}
+
+						<div n:foreach="$field->getItems() as $name => $value" class="radio">
+							{var $item = $field->getControl($name)}
+							{var $label = $item[1]}
+							{var $input = $item[0]}
+							{!$label->startTag() . $input . $label->getText() . $label->endTag()}
+						</div>
+						<span n:if="isset($field->options['description'])" class="help-block">{$field->options['description']}</span>
+					</div>                    
+				{elseif $field instanceof \Nette\Forms\Controls\Checkbox}
+					<div class="form-group">
+						<div class="checkbox">
+							{label $field}
+								{!$field->control}
+								{$field->label->getText()}
+							{/label}
+							<span n:if="isset($field->options['description'])" class="help-block">{$field->options['description']}</span>
+						</div>
+					</div>
+				{else}
+					<div n:class="form-group, $field->required ? required" n:if="!$field->getOption('rendered')" n:block="$field->name.'-row'">
+						{label $field/}
+
+						{!$field->control->addClass('form-control')}
+						<span n:if="isset($field->options['description'])" class="help-block">{$field->options['description']}</span>
+					</div>
+				{/if}
+			{/foreach}
+		{/block}
+	</fieldset>
+
+	{include #controls, group => $form}
+{/form}

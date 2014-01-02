@@ -17,10 +17,12 @@ class SignPresenter extends BasePresenter
 	protected function createComponentSignInForm()
 	{
 		$form = new UI\Form;
-		$form->addText('username', 'Username:')
+		$form->addText('username', 'Username')
+			->setAttribute('placeholder', 'Username')
 			->setRequired('Please enter your username.');
 
-		$form->addPassword('password', 'Password:')
+		$form->addPassword('password', 'Password')
+			->setAttribute('placeholder', 'Password')
 			->setRequired('Please enter your password.');
 
 		$form->addCheckbox('remember', 'Keep me signed in');

@@ -1,20 +1,27 @@
+/*
+ * Style tweaks
+ */
+html,
 body {
-	padding-top: 60px;
-	padding-bottom: 40px;
+	overflow-x: hidden; /* Prevent scroll on narrow devices */
 }
-.sidebar-nav {
-	padding: 9px 0;
+body {
+	padding-top: 70px;
 }
-
-@media (max-width: 980px) {
-	/* Enable use of floated navbar text */
-	.navbar-text.pull-right {
-		float: none;
-		padding-left: 5px;
-		padding-right: 5px;
-	}
+footer {
+	padding: 30px 0;
+}
+.container {
+	width: 100%;
+	padding-left: 20px;
+	padding-right: 20px;
 }
 
+
+
+/*
+ * Nette styles
+ */
 #ajax-spinner {
 	margin: 15px 0 0 15px;
 	padding: 13px;
@@ -31,7 +38,9 @@ a[href^="error:"] {
 
 
 
-/*~~~~~~ Vertical center alignment - see http://css-tricks.com/centering-in-the-unknown/ */
+/*
+ * Vertical center alignment - see http://css-tricks.com/centering-in-the-unknown/ 
+ */
 .vertical-center-parent:before {  /* The ghost, nudged to maintain perfect centering */
 	content: '';
 	display: inline-block;
