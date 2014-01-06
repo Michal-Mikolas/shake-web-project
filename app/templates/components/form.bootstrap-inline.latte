@@ -9,42 +9,44 @@
 
 		{block #controls}
 			{foreach $group->controls as $field}
-				{if $field instanceof \Nette\Forms\Controls\Button}
-					<div class="form-group">
-						{!$field->control->addClass('btn')}
-						<span n:if="isset($field->options['description'])" class="help-block">{$field->options['description']}</span>
-					</div>
-				{elseif $field instanceof \Nette\Forms\Controls\RadioList}
-					<div class="form-group">
-						{label $field, class => 'sr-only'/}
-
-						<div class="radio">
-							{foreach $field->getItems() as $name => $value}
-								{var $item = $field->getControl($name)}
-								{var $label = $item[1]->addClass('radio-inline')}
-								{var $input = $item[0]}
-								{!$label->startTag() . $input . $label->getText() . $label->endTag()}
-							{/foreach}
-						</div>
-						<span n:if="isset($field->options['description'])" class="help-block">{$field->options['description']}</span>
-					</div>                    
-				{elseif $field instanceof \Nette\Forms\Controls\Checkbox}
-					<div class="form-group">
-						<div class="checkbox">
-							{label $field}
-								{!$field->control}
-								{$field->label->addClass('checkbox-inline')->getText()}
-							{/label}
+				{if !$field->getOption('rendered')}
+					{if $field instanceof \Nette\Forms\Controls\Button}
+						<div class="form-group">
+							{!$field->control->addClass('btn')}
 							<span n:if="isset($field->options['description'])" class="help-block">{$field->options['description']}</span>
 						</div>
-					</div>
-				{else}
-					<div n:class="form-group, $field->required ? required" n:if="!$field->getOption('rendered')" n:block="$field->name.'-row'">
-						{label $field, class => 'sr-only'/}
+					{elseif $field instanceof \Nette\Forms\Controls\RadioList}
+						<div class="form-group">
+							{label $field, class => 'sr-only'/}
 
-						{!$field->control->addClass('form-control')}
-						<span n:if="isset($field->options['description'])" class="help-block">{$field->options['description']}</span>
-					</div>
+							<div class="radio">
+								{foreach $field->getItems() as $name => $value}
+									{var $item = $field->getControl($name)}
+									{var $label = $item[1]->addClass('radio-inline')}
+									{var $input = $item[0]}
+									{!$label->startTag() . $input . $label->getText() . $label->endTag()}
+								{/foreach}
+							</div>
+							<span n:if="isset($field->options['description'])" class="help-block">{$field->options['description']}</span>
+						</div>                    
+					{elseif $field instanceof \Nette\Forms\Controls\Checkbox}
+						<div class="form-group">
+							<div class="checkbox">
+								{label $field}
+									{!$field->control}
+									{$field->label->addClass('checkbox-inline')->getText()}
+								{/label}
+								<span n:if="isset($field->options['description'])" class="help-block">{$field->options['description']}</span>
+							</div>
+						</div>
+					{else}
+						<div n:class="form-group, $field->required ? required" n:if="!$field->getOption('rendered')" n:block="$field->name.'-row'">
+							{label $field, class => 'sr-only'/}
+
+							{!$field->control->addClass('form-control')}
+							<span n:if="isset($field->options['description'])" class="help-block">{$field->options['description']}</span>
+						</div>
+					{/if}
 				{/if}
 			{/foreach}
 		{/block}

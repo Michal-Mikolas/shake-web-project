@@ -9,46 +9,48 @@
 
 		{block #controls}
 			{foreach $group->controls as $field}
-				{if $field instanceof \Nette\Forms\Controls\Button}
-					<div class="form-group">
-						<div class="col-sm-offset-2 col-sm-10">
-							{!$field->control->addClass('btn')}
-							<span n:if="isset($field->options['description'])" class="help-block">{$field->options['description']}</span>
-						</div>
-					</div>
-				{elseif $field instanceof \Nette\Forms\Controls\RadioList}
-					<div class="form-group">
-						{label $field, class => 'col-sm-2 control-label'/}
-						<div class="col-sm-10">
-							<div n:foreach="$field->getItems() as $name => $value" class="radio">
-								{var $item = $field->getControl($name)}
-								{var $label = $item[1]}
-								{var $input = $item[0]}
-								{!$label->startTag() . $input . $label->getText() . $label->endTag()}
-							</div>
-							<span n:if="isset($field->options['description'])" class="help-block">{$field->options['description']}</span>
-						</div>
-					</div>                    
-				{elseif $field instanceof \Nette\Forms\Controls\Checkbox}
-					<div class="form-group">
-						<div class="col-sm-offset-2 col-sm-10">
-							<div class="checkbox">
-								{label $field}
-									{!$field->control}
-									{$field->label->getText()}
-								{/label}
+				{if !$field->getOption('rendered')}
+					{if $field instanceof \Nette\Forms\Controls\Button}
+						<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-10">
+								{!$field->control->addClass('btn')}
 								<span n:if="isset($field->options['description'])" class="help-block">{$field->options['description']}</span>
 							</div>
 						</div>
-					</div>
-				{else}
-					<div n:class="form-group, $field->required ? required" n:if="!$field->getOption('rendered')" n:block="$field->name.'-row'">
-						{label $field, class => 'col-sm-2 control-label'/}
-						<div class="col-sm-10">
-							{!$field->control->addClass('form-control')}
-							<span n:if="isset($field->options['description'])" class="help-block">{$field->options['description']}</span>
+					{elseif $field instanceof \Nette\Forms\Controls\RadioList}
+						<div class="form-group">
+							{label $field, class => 'col-sm-2 control-label'/}
+							<div class="col-sm-10">
+								<div n:foreach="$field->getItems() as $name => $value" class="radio">
+									{var $item = $field->getControl($name)}
+									{var $label = $item[1]}
+									{var $input = $item[0]}
+									{!$label->startTag() . $input . $label->getText() . $label->endTag()}
+								</div>
+								<span n:if="isset($field->options['description'])" class="help-block">{$field->options['description']}</span>
+							</div>
+						</div>                    
+					{elseif $field instanceof \Nette\Forms\Controls\Checkbox}
+						<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-10">
+								<div class="checkbox">
+									{label $field}
+										{!$field->control}
+										{$field->label->getText()}
+									{/label}
+									<span n:if="isset($field->options['description'])" class="help-block">{$field->options['description']}</span>
+								</div>
+							</div>
 						</div>
-					</div>
+					{else}
+						<div n:class="form-group, $field->required ? required" n:if="!$field->getOption('rendered')" n:block="$field->name.'-row'">
+							{label $field, class => 'col-sm-2 control-label'/}
+							<div class="col-sm-10">
+								{!$field->control->addClass('form-control')}
+								<span n:if="isset($field->options['description'])" class="help-block">{$field->options['description']}</span>
+							</div>
+						</div>
+					{/if}
 				{/if}
 			{/foreach}
 		{/block}
