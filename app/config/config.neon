@@ -6,7 +6,7 @@
 #
 parameters:
 	container:
-		parent: Shake\Application\DI\Container               # repository autoloading & virtual repository
+		parent: Shake\DI\Container                           # repository autoloading & virtual repository
 
 
 php:
