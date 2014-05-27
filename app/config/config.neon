@@ -32,4 +32,4 @@ services:
 		class: Shake\Scaffolding\PresenterFactory(%appDir%)  # virtual presenter feature
 
 	authenticator: Authenticator
-	router: App\RouterFactory()::createRouter
+	router: RouterFactory()::createRouter
