@@ -1,16 +1,13 @@
 {
 	"name": "shake/sandbox",
 	"description": "Basic application structure with Nette framework and Shake library.",
-	"homepage": "https://bitbucket.org/nanuqcz/shake/wiki/Home",
+	"homepage": "https://bitbucket.org/nanuqcz/shake-shake/wiki",
 	"authors": [
 		{
 			"name": "Michal Mikoláš",
 			"homepage": "http://michal.webshake.cz"
 		}
 	],
-	"config": {
-		"vendor-dir": "libs"
-	},
 	"minimum-stability": "dev",
 	"repositories": [
 		{
