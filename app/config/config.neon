@@ -6,7 +6,7 @@
 #
 parameters:
 	container:
-		parent: Shake\DI\Container                           # repository autoloading & virtual repository
+		parent: Shake\DI\Container                           # virtual repository & service, autoloading
 
 
 php:
@@ -31,8 +31,8 @@ services:
 	nette.presenterFactory:
 		class: Shake\Scaffolding\PresenterFactory(%appDir%)  # virtual presenter feature
 
-	database:                                               # database ORM behaviour
-		class: Shake\Database\Context(@nette.database.default.context, Shake\Database\ConventionalOrmFactory())
+	database:                                               # database ORM
+		class: Shake\Database\Orm\Context(@nette.database.default.context, Shake\Database\Orm\ConventionalFactory())
 
 	authenticator: Authenticator
 	router: RouterFactory()::createRouter
