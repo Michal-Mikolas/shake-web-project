@@ -32,7 +32,7 @@ services:
 		class: Shake\Scaffolding\PresenterFactory()          # virtual presenter feature
 
 	database:                                               # database ORM
-		class: Shake\Database\Orm\Context(@nette.database.default.context, Shake\Database\Orm\ConventionalFactory())
+		class: Shake\Database\Orm\Context(@nette.database.default.context, Shake\Database\Orm\ConventionalFactory('*Entity', '*Table', ...))
 
 	authenticator: Authenticator
 	router: RouterFactory()::createRouter
