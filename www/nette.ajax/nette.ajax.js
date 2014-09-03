@@ -45,10 +45,7 @@ var nette = function () {
 			return result;
 		},
 		requestHandler: function (e) {
-			var xhr = inner.self.ajax({}, this, e);
-			if (xhr && xhr._returnFalse) { // for IE 8
-				return false;
-			}
+			if (!inner.self.ajax({}, this, e)) return;
 		},
 		ext: function (callbacks, context, name) {
 			while (!name) {
@@ -313,8 +310,7 @@ $.nette.ext('validation', {
 		}
 
 		if (validate.form && analyze.form && !((analyze.isSubmit || analyze.isImage) && analyze.el.attr('formnovalidate') !== undefined)) {
-			var ie = this.ie();
-			if (analyze.form.get(0).onsubmit && analyze.form.get(0).onsubmit((typeof ie !== 'undefined' && ie < 9) ? undefined : e) === false) {
+			if (analyze.form.get(0).onsubmit && analyze.form.get(0).onsubmit(e) === false) {
 				e.stopImmediatePropagation();
 				e.preventDefault();
 				return false;
@@ -329,22 +325,11 @@ $.nette.ext('validation', {
 		if (!passEvent) {
 			e.stopPropagation();
 			e.preventDefault();
-			xhr._returnFalse = true; // for IE 8
 		}
 		return true;
 	}
 }, {
-	explicitNoAjax: false,
-	ie: function (undefined) { // http://james.padolsey.com/javascript/detect-ie-in-js-using-conditional-comments/
-		var v = 3;
-		var div = document.createElement('div');
-		var all = div.getElementsByTagName('i');
-		while (
-        		div.innerHTML = '<!--[if gt IE ' + (++v) + ']><i></i><![endif]-->',
-			all[0]
-		);
-		return v > 4 ? v : undefined;
-	}
+	explicitNoAjax: false
 });
 
 $.nette.ext('forms', {
@@ -363,91 +348,84 @@ $.nette.ext('forms', {
 		if (!analyze || !analyze.form) return;
 		var e = analyze.e;
 		var originalData = settings.data || {};
-		var data = {};
+		var formData = {};
 
 		if (analyze.isSubmit) {
-			data[analyze.el.attr('name')] = analyze.el.val() || '';
+			formData[analyze.el.attr('name')] = analyze.el.val() || '';
 		} else if (analyze.isImage) {
 			var offset = analyze.el.offset();
 			var name = analyze.el.attr('name');
 			var dataOffset = [ Math.max(0, e.pageX - offset.left), Math.max(0, e.pageY - offset.top) ];
 
 			if (name.indexOf('[', 0) !== -1) { // inside a container
-				data[name] = dataOffset;
+				formData[name] = dataOffset;
 			} else {
-				data[name + '.x'] = dataOffset[0];
-				data[name + '.y'] = dataOffset[1];
+				formData[name + '.x'] = dataOffset[0];
+				formData[name + '.y'] = dataOffset[1];
 			}
 		}
-		
-		// https://developer.mozilla.org/en-US/docs/Web/Guide/Using_FormData_Objects#Sending_files_using_a_FormData_object
-		if (analyze.form.attr('method').toLowerCase() === 'post' && 'FormData' in window) {
-			var formData = new FormData(analyze.form[0]);
-			for (var i in formData) {
-				formData.append(i, formData[i]);
-			}
 
-			if (typeof originalData !== 'string') {
-				for (var i in originalData) {
-					formData.append(i, originalData[i]);
-				}
-			}
-
-			settings.data = formData;
-			settings.processData = false;
-			settings.contentType = false;
-		} else {
-			if (typeof originalData !== 'string') {
-				originalData = $.param(originalData);
-			}
-			data = $.param(data);
-			settings.data = analyze.form.serialize() + (data ? '&' + data : '') + '&' + originalData;
+		if (typeof originalData !== 'string') {
+			originalData = $.param(originalData);
 		}
+		formData = $.param(formData);
+		settings.data = analyze.form.serialize() + (formData ? '&' + formData : '') + '&' + originalData;
 	}
 });
 
 // default snippet handler
 $.nette.ext('snippets', {
 	success: function (payload) {
+		var snippets = [];
+		var elements = [];
 		if (payload.snippets) {
-			this.updateSnippets(payload.snippets);
+			for (var i in payload.snippets) {
+				var $el = this.getElement(i);
+				if ($el.get(0)) {
+					elements.push($el.get(0));
+				}
+				$.each(this.beforeQueue, function (index, callback) {
+					if (typeof callback === 'function') {
+						callback($el);
+					}
+				});
+				this.updateSnippet($el, payload.snippets[i]);
+				$.each(this.afterQueue, function (index, callback) {
+					if (typeof callback === 'function') {
+						callback($el);
+					}
+				});
+			}
+			var defer = $(elements).promise();
+			$.each(this.completeQueue, function (index, callback) {
+				if (typeof callback === 'function') {
+					defer.done(callback);
+				}
+			});
 		}
 	}
 }, {
-	beforeQueue: $.Callbacks(),
-	afterQueue: $.Callbacks(),
-	completeQueue: $.Callbacks(),
+	beforeQueue: [],
+	afterQueue: [],
+	completeQueue: [],
 	before: function (callback) {
-		this.beforeQueue.add(callback);
+		this.beforeQueue.push(callback);
 	},
 	after: function (callback) {
-		this.afterQueue.add(callback);
+		this.afterQueue.push(callback);
 	},
 	complete: function (callback) {
-		this.completeQueue.add(callback);
-	},
-	updateSnippets: function (snippets, back) {
-		var that = this;
-		var elements = [];
-		for (var i in snippets) {
-			var $el = this.getElement(i);
-			if ($el.get(0)) {
-				elements.push($el.get(0));
-			}
-			this.updateSnippet($el, snippets[i], back);
-		}
-		$(elements).promise().done(function () {
-			that.completeQueue.fire();
-		});
+		this.completeQueue.push(callback);
 	},
 	updateSnippet: function ($el, html, back) {
+		if (typeof $el === 'string') {
+			$el = this.getElement($el);
+		}
 		// Fix for setting document title in IE
 		if ($el.is('title')) {
 			document.title = html;
 		} else {
-			this.beforeQueue.fire($el);
 			this.applySnippet($el, html, back);
-			this.afterQueue.fire($el);
 		}
 	},
 	getElement: function (id) {
@@ -456,8 +434,6 @@ $.nette.ext('snippets', {
 	applySnippet: function ($el, html, back) {
 		if (!back && $el.is('[data-ajax-append]')) {
 			$el.append(html);
-		} else if (!back && $el.is('[data-ajax-prepend]')) {
-			$el.prepend(html);
 		} else {
 			$el.html(html);
 		}
