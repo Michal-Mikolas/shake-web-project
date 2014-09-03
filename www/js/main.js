@@ -56,4 +56,13 @@ jQuery(function(){
 	jQuery('html.js ul.nav-tabs, html.js .tab-content').show();
 	/* --- End TW Bootstrap Tabs --- */
 
+
+
+	/*
+	 * Nette.ajax 
+	 */
+	if (jQuery.nette && jQuery.nette.init) {
+		jQuery.nette.init();
+	}
+
 });
