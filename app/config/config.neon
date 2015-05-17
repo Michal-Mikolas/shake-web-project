@@ -26,10 +26,10 @@ session:
 
 services:
 	nette.presenterFactory:
-		class: Shake\Scaffolding\PresenterFactory()          # virtual presenter feature
+		class: Shake\Scaffolding\PresenterFactory          # virtual presenter feature
 
-	database:                                               # database ORM
-		class: Shake\Database\Orm\Context(@nette.database.default.context, Shake\Database\Orm\ConventionalFactory('*Entity', '*Table', ...))
+	database:                                             # database ORM
+		class: Shake\Database\Orm\Context(@database.default.context, Shake\Database\Orm\ConventionalFactory())
 
 	router: App\RouterFactory()::createRouter
 	

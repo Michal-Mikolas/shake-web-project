@@ -13,21 +13,10 @@ use Nette,
 class UserService extends Shake\Scaffolding\Service implements Nette\Security\IAuthenticator
 {
 	const
-		TABLE_NAME = 'user',
 		COLUMN_ID = 'id',
 		COLUMN_NAME = 'username',
 		COLUMN_PASSWORD_HASH = 'password',
 		COLUMN_ROLE = 'role';
-
-
-	/** @var Shake\Database\Orm\Context */
-	private $database;
-
-
-	public function __construct(Shake\Database\Orm\Context $database)
-	{
-		$this->database = $database;
-	}
 
 
 	/**
@@ -39,7 +28,7 @@ class UserService extends Shake\Scaffolding\Service implements Nette\Security\IA
 	{
 		list($username, $password) = $credentials;
 
-		$row = $this->database->table(self::TABLE_NAME)->where(self::COLUMN_NAME, $username)->fetch();
+		$row = $this->find(self::COLUMN_NAME, $username);
 
 		if (!$row) {
 			throw new Nette\Security\AuthenticationException('The username is incorrect.', self::IDENTITY_NOT_FOUND);
@@ -68,7 +57,7 @@ class UserService extends Shake\Scaffolding\Service implements Nette\Security\IA
 	public function add($username, $password)
 	{
 		try {
-			$this->database->table(self::TABLE_NAME)->insert(array(
+			$this->create(array(
 				self::COLUMN_NAME => $username,
 				self::COLUMN_PASSWORD_HASH => Passwords::hash($password),
 			));
