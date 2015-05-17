@@ -14,17 +14,14 @@ php:
 	# zlib.output_compression: yes
 
 
-nette:
-	application:
-		errorPresenter: Error
+application:
+	errorPresenter: Error
+	mapping:
+		*: App\*Module\Presenters\*Presenter
 
-	database:
-		dsn: 'mysql:host=localhost;dbname=test'
-		user: root
-		password:
 
-	session:
-		expiration: 14 days
+session:
+	expiration: 14 days
 
 
 services:
@@ -34,5 +31,10 @@ services:
 	database:                                               # database ORM
 		class: Shake\Database\Orm\Context(@nette.database.default.context, Shake\Database\Orm\ConventionalFactory('*Entity', '*Table', ...))
 
-	authenticator: Authenticator
-	router: RouterFactory()::createRouter
+	router: App\RouterFactory()::createRouter
+	
+	# Model services
+	- App\Model\UserService   # used also as iAuthenticator
+
+	# Forms
+	- App\Forms\SignFormFactory

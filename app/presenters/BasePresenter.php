@@ -1,4 +1,6 @@
 <?php
+namespace App\Presenters; 
+
 
 /**
  * Base presenter for all application presenters.

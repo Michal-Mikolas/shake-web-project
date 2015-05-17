@@ -1,7 +1,8 @@
 parameters:
 
-nette:
-
-services:
-
-factories:
+database:
+	dsn: 'mysql:host=localhost;dbname=test'
+	user: root
+	password:
+	options:
+		lazy: yes

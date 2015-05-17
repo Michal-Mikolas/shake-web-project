@@ -1,34 +1,33 @@
 <?php
+namespace App\Model;
 
-use Nette\Security,
-	Nette\Utils\Strings;
+use Shake;
+use Nette,
+	Nette\Utils\Strings,
+	Nette\Security\Passwords;
 
-
-/*
-CREATE TABLE users (
-	id int(11) NOT NULL AUTO_INCREMENT,
-	username varchar(50) NOT NULL,
-	password char(60) NOT NULL,
-	role varchar(20) NOT NULL,
-	PRIMARY KEY (id)
-);
-*/
 
 /**
- * Users authenticator.
+ * UserService
  */
-class Authenticator extends Nette\Object implements Security\IAuthenticator
+class UserService extends Shake\Scaffolding\Service implements Nette\Security\IAuthenticator
 {
-	/** @var Nette\Database\Connection */
+	const
+		TABLE_NAME = 'user',
+		COLUMN_ID = 'id',
+		COLUMN_NAME = 'username',
+		COLUMN_PASSWORD_HASH = 'password',
+		COLUMN_ROLE = 'role';
+
+
+	/** @var Shake\Database\Orm\Context */
 	private $database;
 
 
-
-	public function __construct(Nette\Database\Connection $database)
+	public function __construct(Shake\Database\Orm\Context $database)
 	{
 		$this->database = $database;
 	}
-
 
 
 	/**
@@ -39,33 +38,48 @@ class Authenticator extends Nette\Object implements Security\IAuthenticator
 	public function authenticate(array $credentials)
 	{
 		list($username, $password) = $credentials;
-		$row = $this->database->table('users')->where('username', $username)->fetch();
+
+		$row = $this->database->table(self::TABLE_NAME)->where(self::COLUMN_NAME, $username)->fetch();
 
 		if (!$row) {
-			throw new Security\AuthenticationException('The username is incorrect.', self::IDENTITY_NOT_FOUND);
+			throw new Nette\Security\AuthenticationException('The username is incorrect.', self::IDENTITY_NOT_FOUND);
+
+		} elseif (!Passwords::verify($password, $row[self::COLUMN_PASSWORD_HASH])) {
+			throw new Nette\Security\AuthenticationException('The password is incorrect.', self::INVALID_CREDENTIAL);
+
+		} elseif (Passwords::needsRehash($row[self::COLUMN_PASSWORD_HASH])) {
+			$row->update(array(
+				self::COLUMN_PASSWORD_HASH => Passwords::hash($password),
+			));
 		}
 
-		if ($row->password !== $this->calculateHash($password, $row->password)) {
-			throw new Security\AuthenticationException('The password is incorrect.', self::INVALID_CREDENTIAL);
-		}
-
-		unset($row->password);
-		return new Security\Identity($row->id, $row->role, $row->toArray());
+		$arr = $row->toArray();
+		unset($arr[self::COLUMN_PASSWORD_HASH]);
+		return new Nette\Security\Identity($row[self::COLUMN_ID], $row[self::COLUMN_ROLE], $arr);
 	}
-
 
 
 	/**
-	 * Computes salted password hash.
+	 * Adds new user.
 	 * @param  string
-	 * @return string
+	 * @param  string
+	 * @return void
 	 */
-	public static function calculateHash($password, $salt = NULL)
+	public function add($username, $password)
 	{
-		if ($password === Strings::upper($password)) { // perhaps caps lock is on
-			$password = Strings::lower($password);
+		try {
+			$this->database->table(self::TABLE_NAME)->insert(array(
+				self::COLUMN_NAME => $username,
+				self::COLUMN_PASSWORD_HASH => Passwords::hash($password),
+			));
+		} catch (Nette\Database\UniqueConstraintViolationException $e) {
+			throw new DuplicateNameException;
 		}
-		return crypt($password, $salt ?: '$2a$07$' . Strings::random(22));
 	}
 
 }
+
+
+
+class DuplicateNameException extends \Exception
+{}

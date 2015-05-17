@@ -5,10 +5,9 @@
 	"authors": [
 		{
 			"name": "Michal Mikoláš",
-			"homepage": "http://michal.webshake.cz"
+			"homepage": "http://www.michalm.cz"
 		}
 	],
-	"minimum-stability": "dev",
 	"repositories": [
 		{
 			"type": "package",
@@ -24,7 +23,7 @@
 		}
 	],
 	"require": {
-		"php": ">= 5.4.0",
-		"shake/shake": "dev-master"
+		"php": ">=5.4.0",
+		"shake/shake": "2.3.*"
 	}
 }
