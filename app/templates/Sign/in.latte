@@ -5,8 +5,8 @@
 			<h2 class="form-signin-heading">Please sign in</h2>
 			{input username, class => 'form-control', autofocus => 'autofocus'}
 			{input password, class => 'form-control'}
-			{label remember, class => 'checkbox'}
-				{input remember} {$form['remember']->label->getText()}
+			{label remember:, class => 'checkbox'}
+				{input remember:} {$form[remember]->caption}
 			{/label}
 			{input send, class => 'btn btn-lg btn-primary btn-block'}
 		{/form}
