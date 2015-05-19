@@ -28,7 +28,7 @@ class UserService extends Shake\Scaffolding\Service implements Nette\Security\IA
 	{
 		list($username, $password) = $credentials;
 
-		$row = $this->find(self::COLUMN_NAME, $username);
+		$row = $this->findBy(self::COLUMN_NAME, $username);
 
 		if (!$row) {
 			throw new Nette\Security\AuthenticationException('The username is incorrect.', self::IDENTITY_NOT_FOUND);
