@@ -1,0 +1,62 @@
+/*
+ * Style tweaks
+ */
+html,
+body {
+	overflow-x: hidden; /* Prevent scroll on narrow devices */
+}
+body {
+	padding-top: 70px;
+}
+footer {
+	padding: 30px 0;
+}
+.container {
+	width: 100%;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+
+
+/*
+ * Nette styles
+ */
+#ajax-spinner {
+	margin: 15px 0 0 15px;
+	padding: 13px;
+	background: white url('../images/spinner.gif') no-repeat 50% 50%;
+	font-size: 0;
+	z-index: 123456;
+	display: none;
+}
+
+a[href^="error:"] {
+	background: red;
+	color: white;
+}
+
+
+
+/*
+ * Vertical center alignment - see http://css-tricks.com/centering-in-the-unknown/ 
+ */
+.vertical-center-parent:before {  /* The ghost, nudged to maintain perfect centering */
+	content: '';
+	display: inline-block;
+	height: 100%;
+	vertical-align: middle;
+	margin-right: -0.25em;  /* Adjusts for spacing */
+}
+.vertical-center-parent {
+	letter-spacing: -.31em;  /* Fix for unwanted spaces before centered element */
+	word-spacing: -.43em;
+}
+.vertical-center {  /* The element to be centered, can also be of any width and height */ 
+	display: inline-block;
+	vertical-align: middle;
+	
+	letter-spacing: normal;
+	word-spacing: normal;
+}
+/*~~~~~~/   */
