@@ -6,7 +6,7 @@
 #
 parameters:
 	container:
-		parent: Shake\DI\Container                         # virtual repository & service, autoloading
+		parent: Shake\DI\Container                         # support for __get() method
 
 
 php:
@@ -22,6 +22,10 @@ application:
 
 session:
 	expiration: 14 days
+
+
+extensions:
+	shake.scaffolding: Shake\Scaffolding\Extension
 
 
 services:
