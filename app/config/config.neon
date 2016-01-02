@@ -5,8 +5,6 @@
 # http://nette.org/security-warning
 #
 parameters:
-	container:
-		parent: Shake\DI\Container                         # support for __get() method
 
 
 php:
@@ -26,15 +24,10 @@ session:
 
 extensions:
 	shake.scaffolding: Shake\Scaffolding\Extension
+	shake.database: Shake\Database\Extension
 
 
 services:
-	nette.presenterFactory:
-		class: Shake\Scaffolding\PresenterFactory          # virtual presenter feature
-
-	database:                                             # database ORM
-		class: Shake\Database\Orm\Context(@database.default.context, Shake\Database\Orm\ConventionalFactory())
-
 	router: App\RouterFactory()::createRouter
 	
 	# Model services

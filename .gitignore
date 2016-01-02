@@ -4,6 +4,7 @@ vendor/*
 !vendor/others
 
 .DS_Store
+.fuse_hidden*
 !.gitignore
 !.htaccess
 !web.config
