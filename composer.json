@@ -1,14 +1,15 @@
 {
-	"name": "shake/sandbox",
-	"description": "Basic application structure with Nette framework and Shake library.",
+	"name": "shake/web-project",
+	"description": "Basic web application structure with Nette framework and Shake library.",
 	"homepage": "https://bitbucket.org/nanuqcz/shake-shake/wiki",
 	"authors": [
 		{
 			"name": "Michal Mikoláš",
-			"homepage": "http://michal.webshake.cz"
+			"homepage": "http://michalm.cz"
 		}
 	],
 	"minimum-stability": "dev",
+	"prefer-stable": false,
 	"repositories": [
 		{
 			"type": "package",
@@ -25,6 +26,6 @@
 	],
 	"require": {
 		"php": ">= 5.4.0",
-		"shake/shake": "dev-master"
+		"shake/shake": "2.4.*"
 	}
 }

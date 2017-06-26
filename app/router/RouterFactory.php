@@ -1,8 +1,11 @@
 <?php
+declare(strict_types=1);
 
-use Nette\Application\Routers\RouteList,
+namespace App\Router;
+
+use Nette,
 	Nette\Application\Routers\Route,
-	Nette\Application\Routers\SimpleRouter;
+	Nette\Application\Routers\RouteList;
 
 
 /**
@@ -16,8 +19,7 @@ class RouterFactory
 	 */
 	public function createRouter()
 	{
-		$router = new RouteList();
-		$router[] = new Route('index.php', 'Homepage:default', Route::ONE_WAY);
+		$router = new RouteList;
 		$router[] = new Route('<presenter>/<action>[/<id>]', 'Homepage:default');
 		return $router;
 	}

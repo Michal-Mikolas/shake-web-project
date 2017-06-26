@@ -1,10 +1,9 @@
 <?php
-
-// Uncomment this line if you must temporarily take down your site for maintenance.
-// require '.maintenance.php';
+declare(strict_types=1);
 
 // Let bootstrap create Dependency Injection container.
 $container = require __DIR__ . '/../app/bootstrap.php';
 
 // Run application.
-$container->getService('application')->run();
+$container->getByType(Nette\Application\Application::class)
+	->run();
