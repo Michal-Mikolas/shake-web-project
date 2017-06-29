@@ -1,7 +1,10 @@
 <?php
 declare(strict_types=1);
 
-use Nette\Security,
+namespace App\Model;
+
+use Nette,
+	Nette\Security,
 	Nette\Security\Passwords;
 
 

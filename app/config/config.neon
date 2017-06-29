@@ -3,8 +3,6 @@
 # https://nette.org/security-warning
 #
 parameters:
-	container:
-		parent: Shake\DI\Container                      # virtual repository & service, autoloading
 
 
 application:
@@ -23,12 +21,12 @@ session:
 	expiration: 14 days
 
 
+extensions:
+	shake.scaffolding: Shake\Scaffolding\DI\Extension
+	shake.di: Shake\DI\Extension
+	shake.database: Shake\Database\DI\Extension
+
+
 services:
-	nette.presenterFactory:
-		class: Shake\Scaffolding\PresenterFactory()    # virtual presenter feature
-
-	database:                                          # database ORM
-		class: Shake\Database\Orm\Context(@nette.database.default.context, Shake\Database\Orm\ConventionalFactory('*Entity', '*Table', ...))
-
 	router: App\Router\RouterFactory::createRouter
 	- App\Model\UserManager                            # also used as authentiator
