@@ -94,6 +94,10 @@
 
 
 	{block scripts}
+	{*<script>
+	// Fix for CKEditor minified in all.js file
+	window.CKEDITOR_BASEPATH = '/bower_components/ckeditor/';
+	</script>*}
 	<script src="{$basePath}/jQuery/jquery.js"></script>
 	<script src="{$basePath}/jQuery/jquery-migrate.js"></script>
 	<script src="{$basePath}/bootstrap/js/bootstrap.js"></script>
