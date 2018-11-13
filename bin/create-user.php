@@ -1,20 +1,25 @@
 <?php
 declare(strict_types=1);
-if (!isset($_SERVER['argv'][3])) {
+
+if (!isset($_SERVER['argv'][2])) {
 	echo '
 Add new user to database.
-Usage: create-user.php <name> <email> <password>
+Usage: create-user.php <email> <password>
 ';
 	exit(1);
 }
-list(, $name, $email, $password) = $_SERVER['argv'];
+
+list(, $email, $password) = $_SERVER['argv'];
+
 $container = require __DIR__ . '/../app/bootstrap.php';
+
 /** @var App\Model\UserManager $manager */
-$manager = $container->getByType(App\Model\UserManager::class);
+$manager = $container->getByType('App\Model\UserManager');
+
 try {
-	$manager->add($name, $email, $password);
-	echo "User $name was added.\n";
+	$manager->add($email, $password);
+	echo "User $email was added.\n";
 } catch (App\Model\DuplicateNameException $e) {
-	echo "Error: duplicate name.\n";
+	echo "Error: duplicate email.\n";
 	exit(1);
 }

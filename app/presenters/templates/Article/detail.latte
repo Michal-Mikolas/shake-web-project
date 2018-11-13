@@ -1,0 +1,14 @@
+{block title}{$article->translation->title}{/block}
+
+
+{block content}
+	<article>
+		{$article->translation->content_html|noescape}
+	</article>
+{/block}
+
+
+{block head}
+	{include #parent}
+	<link rel="stylesheet" href="{$basePath}/css/app.article.css">
+{/block}

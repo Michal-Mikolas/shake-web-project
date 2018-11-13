@@ -1,0 +1,17 @@
+base:
+    addBtn: "Add"
+    editBtn: "Edit"
+    deleteBtn: "Delete"
+    saveBtn: "Save"
+    missingPermissionError: "You don't have necessary permissions. Please login as proper user."
+    deleteConfirmationMsg: "Really delete?"
+
+articles:
+    id: "ID"
+    title: "Title"
+    titleSlug: "Title for URL"
+    content: "Content"
+    preview: "Preview"
+    actions: "Actions"
+    editBtn: "Edit"
+    deleteBtn: "Delete"

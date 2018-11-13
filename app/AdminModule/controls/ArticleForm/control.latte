@@ -1,0 +1,36 @@
+<form n:name="form">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs">
+        <li n:foreach="$languages as $language"
+            n:class="$iterator->first? active"
+        >
+            <a href="#article-lang-{$language->key}" data-toggle="tab">
+                <span class="lang-sm lang-lbl" lang="{$language->key}"></span>
+            </a>
+        </li>
+    </ul>
+    <br/>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div n:foreach="$languages as $language"
+            n:class="tab-pane, $iterator->first? active"
+            id="article-lang-{$language->key}"
+        >
+            <div class="form-group">
+                <label n:name="languages-{$language->id}-title"/>
+                <input n:name="languages-{$language->id}-title" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <label n:name="languages-{$language->id}-title_slug"/>
+                <input n:name="languages-{$language->id}-title_slug" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <label n:name="languages-{$language->id}-content_html"/>
+                <textarea n:name="languages-{$language->id}-content_html" class="form-control" rows="6"/>
+            </div>
+        </div>
+    </div>
+
+    <button n:name="save" class="btn btn-primary"/>
+</form>

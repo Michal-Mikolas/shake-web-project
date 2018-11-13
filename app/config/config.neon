@@ -18,8 +18,23 @@ session:
 extensions:
 	shake.di: Shake\DI\Extension
 	shake.database: Shake\Database\DI\Extension
+	translation: Kdyby\Translation\DI\TranslationExtension
+	thumbnail: Kollarovic\Thumbnail\DI\Extension
+
+
+translation:
+	default: en
+	fallback: [en]
+
+
+thumbnail:
+	thumbPathMask: 'thumbs/{filename}-{width}x{height}.{extension}'
+	placeholder: 'http://dummyimage.com/{width}x{height}/efefef/f00&text=Image+not+found'
 
 
 services:
 	router: App\Router\RouterFactory::createRouter
 	- App\Model\UserManager                            # also used as authentiator
+
+	- App\Model\ArticleManager
+	- App\Model\LanguageManager

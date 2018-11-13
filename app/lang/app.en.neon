@@ -1,0 +1,10 @@
+base:
+    sendBtn: "Send"
+
+user:
+    email: "E-mail"
+    password: "Password"
+    loginBtn: "Login"
+    loggedIn: "You are logged in as %email%"
+    logout: "Logout"
+    loggedOutMessage: "You have been logged out."

@@ -11,7 +11,11 @@
 	"minimum-stability": "dev",
 	"prefer-stable": true,
 	"require": {
-		"php": ">= 5.4.0",
-		"shake/shake": "2.4.*"
+		"php": ">= 5.7.0",
+		"shake/shake": "2.4.*",
+		"robmorgan/phinx": "^0.8.1",
+		"kdyby/translation": "^2.4",
+		"kollarovic/thumbnail": "^1.0",
+		"dg/ftp-deployment": "^2.7"
 	}
 }

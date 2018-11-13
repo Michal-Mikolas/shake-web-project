@@ -5,22 +5,25 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<title>{ifset title}{include title|stripHtml} | {/ifset}Project Name</title>
+<title>{ifset title}{include title|stripHtml} | {/ifset}Admin</title>
 
-	<!-- Fav and touch icons -->
-	<link rel="shortcut icon" href="{$basePath}/favicon.ico">
-
-	<!-- Bower & Gulp CSS -->
+	<!-- Core CSS -->
 	<link href="{$basePath}/bower_components/all.min.css" rel="stylesheet">
+	{* <link href="{$basePath}/bootstrap/css/bootstrap.css" rel="stylesheet"> *}
+	{* <link href="{$basePath}/bootstrap/css/bootstrap-theme.css" rel="stylesheet"> *}
 
 	<!-- Custom styles for this template -->
 	<link href="{$basePath}/css/app.css" rel="stylesheet">
+	<link href="{$basePath}/css/app.admin.css" rel="stylesheet">
 
 	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!--[if lt IE 9]>
 		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 		<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
 	<![endif]-->
+
+	<!-- Fav and touch icons -->
+	<link rel="shortcut icon" href="{$basePath}/favicon.ico">
 
 	{block head}{/block}
 </head>
@@ -35,21 +38,29 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" n:href="Homepage:">Project name</a>
+				<a class="navbar-brand" n:href=":Homepage:">Go to web</a>
 			</div>
 			<div class="collapse navbar-collapse">
+				<p class="language-picker navbar-text pull-right">
+					<a n:href="this, locale => 'cs'" n:class="navbar-link, $presenter->locale=='cs'? active">
+						<span class="lang-sm" lang="cs"></span>
+					</a>
+					<a n:href="this, locale => 'en'" n:class="navbar-link, $presenter->locale=='en'? active">
+						<span class="lang-sm" lang="en"></span>
+					</a>
+				</p>
+
 				<p class="navbar-text pull-right">
 					{if $user->isLoggedIn()}
 						{_app.user.loggedIn, [email => $user->identity->email]}
-						<a n:href="logout!" class="navbar-text">{_app.user.logout}</a>
+						<a n:href="logout!" class="navbar-link">{_app.user.logout}</a>
 					{else}
-						<a n:href=":User:login" class="navbar-text">{_app.user.login}</a>
+						<a n:href=":User:login" class="navbar-link">{_app.user.login}</a>
 					{/if}
 				</p>
-
 				<ul class="nav navbar-nav">
-					<li n:class="$presenter->isLinkCurrent('Homepage:*')? active">
-						<a n:href="Homepage:">Home</a>
+					<li n:class="$presenter->isLinkCurrent(':Admin:Article:*')? active">
+						<a n:href=":Admin:Article:">{_admin.menu.articles}</a>
 					</li>
 				</ul>
 			</div><!--/.nav-collapse-->
@@ -60,7 +71,7 @@
 
 		<div class="row row-offcanvas row-offcanvas-right">
 			<!-- Content -->
-			<div class="col-xs-12 col-sm-12">
+			<div class="col-xs-12">
 
 				<div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}">
 					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -83,12 +94,18 @@
 
 
 	{block scripts}
-	<script src="{$basePath}/bower_components/all.min.js"></script>
 	<script>
 	// Fix for CKEditor minified in all.js file
 	window.CKEDITOR_BASEPATH = '/bower_components/ckeditor/';
 	</script>
+	{* <script src="{$basePath}/jQuery/jquery.js"></script> *}
+	{* <script src="{$basePath}/jQuery/jquery-migrate.js"></script> *}
+	{* <script src="{$basePath}/bootstrap/js/bootstrap.js"></script> *}
+	{* <script src="{$basePath}/js/netteForms.js"></script> *}
+	<script src="{$basePath}/bower_components/all.min.js"></script>
+	{* <script src="{$basePath}/bower_components/ckeditor/ckeditor.js"></script> *}
 	<script src="{$basePath}/js/app.js"></script>
+	<script src="{$basePath}/js/app.admin.js"></script>
 	{/block}
 </body>
 </html>
