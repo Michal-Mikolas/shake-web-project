@@ -1,10 +1,15 @@
 base:
     sendBtn: "Send"
+    mandatoryFieldError: "Please fill the '%label' field."
 
 user:
     email: "E-mail"
     password: "Password"
+    rememberLogin: "Remember login on this computer"
     loginBtn: "Login"
     loggedIn: "You are logged in as %email%"
     logout: "Logout"
+    loginError: "The credentials are not correct."
     loggedOutMessage: "You have been logged out."
+    emailFormatError: "The e-mail address doesn't seem correct."
+    passwordFormatError: "The password has to be at least 6 characters long."

@@ -1,5 +1,5 @@
 // Include Gulp & plugins
-// npm install --save gulp gulp-main-bower-files gulp-add-src gulp-order gulp-concat gulp-filter gulp-uglify gulp-clean-css
+// $ gulp-install.sh
 var gulp           = require('gulp');
 var mainBowerFiles = require('gulp-main-bower-files');
 var addSrc         = require('gulp-add-src');  // .pipe(addSrc('www/bower_files/foo.js'))

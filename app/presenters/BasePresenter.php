@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Presenters;
 
+use App\Services\FormFactory;
+use Kdyby\Translation\Translator;
 use Shake;
 
 /**
@@ -16,8 +18,11 @@ abstract class BasePresenter extends Shake\Scaffolding\ScaffoldingPresenter
     /** @persistent @var string */
     public $backlink;
 
-	/** @inject @var Kdyby\Translation\Translator */
+	/** @inject @var Translator */
 	public $translator;
+
+	/** @inject @var FormFactory */
+	public $formFactory;
 
 
     public function startup()

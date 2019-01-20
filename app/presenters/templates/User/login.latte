@@ -1,0 +1,11 @@
+{block content}
+	{php $presenter['loginForm']['send']->getControlPrototype()->addClass('btn-primary')}
+	{include ''.\Shake\Components\FORM_BOOTSTRAP3, form => $presenter['loginForm']}
+{/block}
+
+
+{block head}
+	{include #parent}
+
+	<link rel="stylesheet" href="{$basePath}/css/app.user.login.css">
+{/block}

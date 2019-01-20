@@ -38,14 +38,18 @@
 				<a class="navbar-brand" n:href="Homepage:">Project name</a>
 			</div>
 			<div class="collapse navbar-collapse">
-				<p class="navbar-text pull-right">
+				<ul class="nav navbar-nav pull-right">
 					{if $user->isLoggedIn()}
 						{_app.user.loggedIn, [email => $user->identity->email]}
-						<a n:href="logout!" class="navbar-text">{_app.user.logout}</a>
+						<li>
+							<a n:href="logout!">{_app.user.logout}</a>
+						</li>
 					{else}
-						<a n:href=":User:login" class="navbar-text">{_app.user.login}</a>
+						<li n:class="$presenter->isLinkCurrent(':User:login')? active">
+							<a n:href=":User:login">{_app.user.login}</a>
+						</li>
 					{/if}
-				</p>
+				</ul>
 
 				<ul class="nav navbar-nav">
 					<li n:class="$presenter->isLinkCurrent('Homepage:*')? active">
