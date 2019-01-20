@@ -26,7 +26,7 @@ class RouterFactory
 		$adminRouter[] = new Route('[<locale=en en|cs|sk|pl>/]admin/<presenter>/<action>[/<id>]', 'Article:default');
 
 		// Root
-		$router[] = new Route('[<locale=en en|cs|sk|pl>/]<id>', 'Article:detail');
+		$router[] = new Route('[<locale=en en|cs|sk|pl>/]article/<id>', 'Article:detail');
 		$router[] = new Route('[<locale=en en|cs|sk|pl>/]<presenter>/<action>[/<id>]', 'Homepage:default');
 
 		return $router;
