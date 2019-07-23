@@ -11,6 +11,12 @@ Options -Indexes
 	# prevents files starting with dot to be viewed by browser
 	RewriteRule /\.|^\.(?!well-known/) - [F]
 
+	## HTTP -> HTTPS
+	#RewriteCond %{HTTPS} !=on
+	#RewriteCond %{REMOTE_ADDR} !^127\.0\.0\.1$
+	##RewriteCond %{REQUEST_URI} !^/((exclude1/.+)|(exclude2/.+))$ 
+	#RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [L,R=301]
+
 	# front controller
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
