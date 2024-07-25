@@ -17,11 +17,9 @@
 		}
 	],
 	"require": {
-		"php": ">= 5.7.0",
-		"shake/shake": "2.4.*",
-		"robmorgan/phinx": "^0.8.1",
-		"kdyby/translation": "^2.4",
-		"kollarovic/thumbnail": "dev-master",
-		"dg/ftp-deployment": "^2.7"
+		"php": ">= 8.1.0",
+		"shake/shake": "4.0.*",
+		"kdyby/translation": "^3.0",
+		"dg/ftp-deployment": ">=3.6"
 	}
 }
