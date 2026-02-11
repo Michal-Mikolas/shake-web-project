@@ -9,6 +9,11 @@ It is designed to be the most usable and friendliest as possible. It focuses
 on security and performance and is definitely one of the safest PHP frameworks.
 
 
+Documentation
+-------------
+https://bitbucket.org/nanuqcz/shake-shake/wiki/Home
+
+
 Requirements
 ------------
 
